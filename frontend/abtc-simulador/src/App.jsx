@@ -46,18 +46,18 @@ function App() {
     return (
         <>
             {/* CONTENEDOR PRINCIPAL WEB (Se oculta al imprimir con print:hidden) */}
-            <div className="min-h-screen bg-slate-950 text-slate-100 p-8 relative print:hidden">
-                <header className="max-w-6xl mx-auto mb-8 flex justify-between items-center">
-                    <div>
-                        <h1 className="text-4xl font-black text-white">
+            <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-8 relative print:hidden">
+                <header className="max-w-6xl mx-auto mb-8 flex flex-col md:flex-row gap-4 md:gap-0 justify-between md:items-center">
+                    <div className="text-center md:text-left">
+                        <h1 className="text-3xl sm:text-4xl font-black text-white">
                             Simulador ABTC <span className="text-blue-500">Nevada</span>
                         </h1>
-                        <p className="text-slate-400">Motor Estocástico (Congruencial Mixto) - UTN FRT</p>
+                        <p className="text-slate-400 text-sm sm:text-base">Motor Estocástico (Congruencial Mixto) - UTN FRT</p>
                     </div>
                     
                     {/* Botones de acción (Solo visibles si ya se simuló) */}
                     {state && (
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                             {/* Botón de Imprimir Reporte */}
                             <button 
                                 onClick={handlePrint}

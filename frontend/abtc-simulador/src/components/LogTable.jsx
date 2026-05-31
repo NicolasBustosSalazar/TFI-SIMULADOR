@@ -26,12 +26,12 @@ export const LogTable = ({ bitacora }) => {
     };
 
     return (
-        <div className="bg-slate-900 p-6 rounded-2xl border border-slate-700 shadow-2xl mt-8">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">
+        <div className="bg-slate-900 p-4 sm:p-6 rounded-2xl border border-slate-700 shadow-2xl mt-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-between items-center mb-6 text-center sm:text-left">
+                <h2 className="text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">
                     Traza de Operaciones (Últimos 30 Eventos)
                 </h2>
-                <div className="flex gap-3 text-xs font-semibold">
+                <div className="flex flex-wrap justify-center gap-3 text-xs font-semibold">
                     <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500"></span> Alarmas</span>
                     <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-yellow-500"></span> Ocio</span>
                     <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500"></span> Producción</span>

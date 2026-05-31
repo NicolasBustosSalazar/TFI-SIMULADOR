@@ -8,7 +8,7 @@ export const SimulationChart = ({ bitacora }) => {
     // Pantalla de espera si aún no hay simulación
     if (!bitacora || bitacora.length === 0) {
         return (
-            <div className="bg-slate-900 border border-slate-700 rounded-xl p-6 flex items-center justify-center h-96 text-slate-500 shadow-lg">
+            <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 sm:p-6 flex items-center justify-center h-64 sm:h-96 text-slate-500 shadow-lg text-center">
                 Ejecuta la simulación para visualizar la dinámica de inventarios
             </div>
         );
@@ -81,11 +81,11 @@ export const SimulationChart = ({ bitacora }) => {
     };
 
     return (
-        <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-xl w-full">
-            <h3 className="text-emerald-400 font-bold text-sm uppercase mb-4 border-b border-slate-700 pb-2">
+        <div className="bg-slate-900 border border-slate-700 rounded-2xl p-4 sm:p-6 shadow-xl w-full">
+            <h3 className="text-emerald-400 font-bold text-sm uppercase mb-4 border-b border-slate-700 pb-2 text-center sm:text-left">
                 Dinámica de Inventarios (Comportamiento Estocástico)
             </h3>
-            <div className="relative h-[400px]">
+            <div className="relative h-[300px] sm:h-[400px]">
                 <Line data={data} options={options} />
             </div>
         </div>
