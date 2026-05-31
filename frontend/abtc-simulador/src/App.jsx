@@ -17,7 +17,7 @@ function App() {
     const ejecutarSimulacion = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:3001/api/simular', {
+            const response = await fetch('https://tfi-simulador.onrender.com/api/simular', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(params)
