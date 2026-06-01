@@ -38,44 +38,44 @@ export const LogTable = ({ bitacora }) => {
                 </div>
             </div>
 
-            <div className="overflow-x-auto rounded-xl border border-slate-700/50">
+            <div className="w-full overflow-x-auto rounded-xl border border-slate-700/50">
                 <table className="w-full text-sm text-left">
                     <thead className="bg-slate-800/80 text-slate-400 uppercase text-xs tracking-wider">
                         <tr>
-                            <th className="p-4 font-semibold">Hora</th>
-                            <th className="p-4 font-semibold">Estado / Acción</th>
-                            <th className="p-4 font-semibold">Métricas (Cant)</th>
-                            <th className="p-4 font-semibold">Cola a F1</th>
-                            <th className="p-4 font-semibold">Buffer Masa Negra</th>
-                            <th className="p-4 font-semibold">Hs Ocupación (F1 | F2)</th>
+                            <th className="p-4 font-semibold whitespace-nowrap">Hora</th>
+                            <th className="p-4 font-semibold whitespace-nowrap">Estado / Acción</th>
+                            <th className="p-4 font-semibold whitespace-nowrap">Métricas (Cant)</th>
+                            <th className="p-4 font-semibold whitespace-nowrap">Cola a F1</th>
+                            <th className="p-4 font-semibold whitespace-nowrap">Buffer Masa Negra</th>
+                            <th className="p-4 font-semibold whitespace-nowrap">Hs Ocupación (F1 | F2)</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800">
                         {ultimosEventos.map((log, i) => (
                             <tr key={i} className="hover:bg-slate-800/50 transition-colors duration-150">
-                                <td className="p-4 font-mono font-bold text-slate-300">
+                                <td className="p-4 font-mono font-bold text-slate-300 whitespace-nowrap">
                                     {log.hora}h
                                 </td>
-                                <td className="p-4">
-                                    <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getBadgeStyle(log.evento)}`}>
+                                <td className="p-4 whitespace-nowrap">
+                                    <span className={`inline-flex items-center justify-center text-xs text-center px-2 py-1 rounded-full font-bold border ${getBadgeStyle(log.evento)}`}>
                                         {log.evento.replace(/_/g, ' ')}
                                     </span>
                                 </td>
-                                <td className="p-4 font-medium text-slate-200">
+                                <td className="p-4 font-medium text-slate-200 whitespace-nowrap">
                                     {log.cantidad}
                                 </td>
-                                <td className="p-4 font-mono">
+                                <td className="p-4 font-mono whitespace-nowrap">
                                     <span className={parseFloat(log.cola) > 1000 ? "text-red-400 font-bold" : "text-slate-400"}>
                                         {log.cola} t
                                     </span>
                                 </td>
-                                <td className="p-4 font-mono text-orange-300">
+                                <td className="p-4 font-mono text-orange-300 whitespace-nowrap">
                                     {log.bufferStr}
                                 </td>
-                                <td className="p-4 font-mono text-slate-400 text-xs">
-                                    <span className="bg-blue-900/40 text-blue-300 px-2 py-1 rounded">F1: {log.horasActivasF1}h</span>
+                                <td className="p-4 font-mono text-slate-400 text-xs whitespace-nowrap">
+                                    <span className="bg-blue-900/40 text-blue-300 px-2 py-1 rounded whitespace-nowrap">F1: {log.horasActivasF1}h</span>
                                     <span className="mx-1 opacity-50">|</span>
-                                    <span className="bg-emerald-900/40 text-emerald-300 px-2 py-1 rounded">F2: {log.horasActivasF2}h</span>
+                                    <span className="bg-emerald-900/40 text-emerald-300 px-2 py-1 rounded whitespace-nowrap">F2: {log.horasActivasF2}h</span>
                                 </td>
                             </tr>
                         ))}
