@@ -1,12 +1,12 @@
 // backend/rng.js
-let x = 12345; 
-const a = 1103515245; 
-const c = 12345; 
+let x = (Date.now() % 90000) + 10000;
+const a = 1103515245;
+const c = 12345;
 const m = Math.pow(2, 31);
 
-const next = () => { 
-    x = (a * x + c) % m; 
-    return x / m; 
+const next = () => {
+    x = (a * x + c) % m;
+    return x / m;
 };
 
 module.exports = {
@@ -14,8 +14,8 @@ module.exports = {
     getNormal: (mu, sigma) => {
         let u1 = next();
         let u2 = next();
-        if (u1 <= 0) u1 = 0.0000001; 
-        
+        if (u1 <= 0) u1 = 0.0000001;
+
         let z = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
         return (z * Number(sigma)) + Number(mu);
     },
