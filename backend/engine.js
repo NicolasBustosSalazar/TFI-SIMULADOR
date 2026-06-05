@@ -9,6 +9,9 @@ function runSimulation(params) {
     const capBuffer   = Number(params.capacidadBuffer) || 50;
 
     let state = {
+        proximaLlegada: Math.max(1, Math.round(getExponential(tasaLlegada))),
+        tandasCompletadasF1: 0,
+        tandasCompletadasF2: 0,
         colaRecepcion: 0,
         bufferMasaNegra: 0,
         toneladasDerivadas: 0,
@@ -19,7 +22,6 @@ function runSimulation(params) {
         horasOcupadaF2: 0,
         tiempoRestanteF1: 0,
         tiempoRestanteF2: 0,
-        // Acumuladores de subproductos basados en tus nuevas proporciones
         subFase1: { acero: 0, plasticos: 0, cobre: 0, masaNegra: 0, residuos: 0, agua: 0 },
         subFase2: { NiSO4: 0, CoSO4: 0, MnSO4: 0, LiOH: 0, residuos: 0, agua: 0 },
         bitacora: []
@@ -32,10 +34,10 @@ function runSimulation(params) {
         let eventosEnEstaHora = []; 
 
         // 1. LLEGADAS
-        if (h > 0 && h % tasaLlegada === 0) {
+        if (h === state.proximaLlegada) {
             let cantidad = getNormal(mediaLote, mediaLote * 0.10);
             state.materialArribado += cantidad;
-            
+        
             if (state.colaRecepcion + cantidad <= 1600) {
                 state.colaRecepcion += cantidad;
                 state.materialAceptado += cantidad;
@@ -44,6 +46,10 @@ function runSimulation(params) {
                 state.toneladasDerivadas += cantidad;
                 eventosEnEstaHora.push({ evento: "LLEGADA_DERIVADA_COLA_LLENA", cant: cantidad });
             }
+            
+            // CORRECCIÓN 2: Se usa "tasaLlegada", no "mediaLlegadas"
+            let tiempoHastaProxima = Math.max(1, Math.round(getExponential(tasaLlegada)));
+            state.proximaLlegada = h + tiempoHastaProxima;
         }
 
         // 2. FASE 1: PROCESO ESTRICTO CON RINDE DEL 20%
@@ -52,6 +58,11 @@ function runSimulation(params) {
             state.tiempoRestanteF1--;
             state.horasOcupadaF1++;
             estadoF1Actual = 'PROCESANDO';
+            
+            // CORRECCIÓN 3: Si terminó el tiempo en esta hora, sumamos una tanda F1
+            if (state.tiempoRestanteF1 === 0) {
+                state.tandasCompletadasF1++;
+            }
         } else {
             if (state.colaRecepcion < capF1) {
                 estadoF1Actual = 'F1_ESPERA_MATERIAL';
@@ -93,6 +104,11 @@ function runSimulation(params) {
             state.tiempoRestanteF2--;
             state.horasOcupadaF2++;
             estadoF2Actual = 'PROCESANDO';
+            
+            // CORRECCIÓN 3: Si terminó el tiempo en esta hora, sumamos una tanda F2
+            if (state.tiempoRestanteF2 === 0) {
+                state.tandasCompletadasF2++;
+            }
         } else {
             if (state.bufferMasaNegra < capF2) {
                 estadoF2Actual = 'F2_ESPERA_MATERIAL';
@@ -141,6 +157,9 @@ function runSimulation(params) {
 
     return {
         ...state,
+        // Se exportan las tandas reales calculadas para mostrarlas en tu frontend
+        totalTandasFase1: state.tandasCompletadasF1,
+        totalTandasFase2: state.tandasCompletadasF2,
         porcentajeTiempoF1: Math.min(100, (state.horasOcupadaF1 / 720) * 100),
         porcentajeTiempoF2: Math.min(100, (state.horasOcupadaF2 / 720) * 100),
         porcentajeDerivacion: state.materialArribado > 0 
